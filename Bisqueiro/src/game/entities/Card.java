@@ -2,6 +2,9 @@ package game.entities;
 
 public class Card {
 	
+	//Find a way to make a static object with CardProperties set to ERROR
+	//public static final Card GENERIC_CARD(CardProperties.Figure.ERROR, CardProperties.Suit.ERROR);
+	
 	private CardProperties.Figure figure;
 	private CardProperties.Suit suit;
 	

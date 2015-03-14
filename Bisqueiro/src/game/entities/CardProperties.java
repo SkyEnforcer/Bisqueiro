@@ -14,7 +14,6 @@ public enum CardProperties {
 			this.title = title;
 		}
 		
-		@Override
 		public String toString() {
 			return title;
 		}
@@ -31,7 +30,6 @@ public enum CardProperties {
 			this.title = title;
 		}
 		
-		@Override
 		public String toString() {
 			return title;
 		}
