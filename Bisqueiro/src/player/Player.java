@@ -7,7 +7,7 @@ import game.entities.Deck;
 
 public class Player {
 	
-	public static final int HANDSIZE = 3;
+	public static final int STARTING_HANDSIZE = 3;
 	
 	private List<Card> hand;
 	private Deck deck;
@@ -15,8 +15,8 @@ public class Player {
 	public Player(Deck deck) {
 		this.deck = deck;
 		
-		hand = new ArrayList<Card>(HANDSIZE);
-		for(int i = 0; i < HANDSIZE; i++) {
+		hand = new ArrayList<Card>(STARTING_HANDSIZE);
+		for(int i = 0; i < STARTING_HANDSIZE; i++) {
 			hand.set(i, drawCard());
 		}
 	}
@@ -30,9 +30,9 @@ public class Player {
 	}
 	
 	public List<String> getHandNames() {
-		List<String> handNames = new ArrayList<String>(HANDSIZE);
+		List<String> handNames = new ArrayList<String>(STARTING_HANDSIZE);
 		
-		for(int i = 0; i < HANDSIZE; i++) {
+		for(int i = 0; i < STARTING_HANDSIZE; i++) {
 			handNames.set(i, hand.get(i).getName());
 		}
 		
