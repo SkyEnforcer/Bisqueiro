@@ -12,12 +12,19 @@ public class Card {
 		this.suit = suit;
 	}
 	
+	//Não usado de momento
 	public CardProperties.Figure getFigure() {
 		return figure;
 	}
 	
+	//Não usado de momento
 	public CardProperties.Suit getSuit() {
 		return suit;
+	}
+	
+	//Não usado de momento
+	public String getName() {
+		return figure.toString() + " de " + suit.toString();
 	}
 	
 }

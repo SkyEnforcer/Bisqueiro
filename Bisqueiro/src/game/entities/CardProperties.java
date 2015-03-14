@@ -4,11 +4,37 @@ public enum CardProperties {
 	;//<----- WHAT THE FUCK???????????????????????????????????????????
 	
 	public enum Figure {
-		ERROR, ONE, TWO, THREE, FOUR, FIVE,
-		SIX, SEVEN, JACK, QUEEN, KING
+		ERROR("ERRO"), ONE("Um"), TWO("Dois"), THREE("Três"),
+		FOUR("Quatro"), FIVE("Cinco"), SIX("Seis"), SEVEN("Sete"),
+		JACK("Valete"), QUEEN("Rainha"), KING("Rei");
+		
+		private String title;
+		
+		private Figure(String title) {
+			this.title = title;
+		}
+		
+		@Override
+		public String toString() {
+			return title;
+		}
+		
 	}
 	
 	public enum Suit {
-		ERROR, SPADES, HEARTS, DIAMONDS, CLUBS
+		ERROR("ERRO"), SPADES("Espadas"), HEARTS("Copas"),
+		DIAMONDS("Ouros"), CLUBS ("Paus");
+		
+		private String title;
+		
+		private Suit(String title) {
+			this.title = title;
+		}
+		
+		@Override
+		public String toString() {
+			return title;
+		}
 	}
+
 }

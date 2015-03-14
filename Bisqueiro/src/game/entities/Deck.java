@@ -7,12 +7,27 @@ import java.util.Random;
 public class Deck {
 	public static final int SIZE = 40;
 	
+	//card at index 0 is the bottom card, card at index deck.size() is the top card
 	private List<Card> deck;
 	
 	public Deck() {
 		deck = new ArrayList<Card>(SIZE);
 		populate();
 		shuffle();
+	}
+
+	//This is a destructive operation, meaning it will destroy the card that's returned
+	//Returns the card at the top of the deck
+	public Card getTopCard() {
+		int cardIndex = deck.size() - 1;
+		Card card = deck.get(cardIndex);
+		deck.remove(cardIndex);
+		return card;
+	}
+	
+	//This operation only shows the card at the bottom of the deck, but does not destroy it
+	public Card getLastCard() {
+		return deck.get(0);
 	}
 	
 	//will throw IndexOutOfBoundsException if more than 40 cards are added to the deck
