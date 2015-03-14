@@ -10,15 +10,18 @@ public class Player {
 	public static final int HANDSIZE = 3;
 	
 	private List<Card> hand;
+	private Deck deck;
 	
 	public Player(Deck deck) {
+		this.deck = deck;
+		
 		hand = new ArrayList<Card>(HANDSIZE);
 		for(int i = 0; i < HANDSIZE; i++) {
-			hand.set(i, drawCard(deck));
+			hand.set(i, drawCard());
 		}
 	}
 	
-	public Card drawCard(Deck deck) {
+	public Card drawCard() {
 		return deck.getTopCard();
 	}
 	
