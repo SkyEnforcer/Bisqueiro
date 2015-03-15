@@ -11,8 +11,10 @@ public class Player {
 	
 	private List<Card> hand;
 	private Deck deck;
+	private String name;
 	
-	public Player(Deck deck) {
+	public Player(String name, Deck deck) {
+		this.name = name;
 		this.deck = deck;
 		
 		hand = new ArrayList<Card>(STARTING_HANDSIZE);
@@ -44,6 +46,10 @@ public class Player {
 		Card card = hand.get(i);
 		hand.remove(i);
 		return card;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 }
