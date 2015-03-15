@@ -1,21 +1,27 @@
 package game.entities;
 
 public enum CardProperties {
-	;//<----- WHAT THE FUCK???????????????????????????????????????????
+	;//Required even though CardProperties doesn't have any fields of itself
 	
 	public enum Figure {
-		ERROR("ERRO"), ACE("Ás"), TWO("Dois"), THREE("Três"),
-		FOUR("Quatro"), FIVE("Cinco"), SIX("Seis"), SEVEN("Sete"),
-		JACK("Valete"), QUEEN("Rainha"), KING("Rei");
+		ERROR("ERRO", -1), ACE("Ás", 14), TWO("Dois", 2), THREE("Três", 3),
+		FOUR("Quatro", 4), FIVE("Cinco", 5), SIX("Seis", 6), SEVEN("Sete", 13),
+		JACK("Valete", 10), QUEEN("Rainha", 11), KING("Rei", 12);
 		
 		private String title;
+		private int value;
 		
-		private Figure(String title) {
+		private Figure(String title, int value) {
 			this.title = title;
 		}
 		
+		//@Override
 		public String toString() {
 			return title;
+		}
+		
+		public int getNumericRepresentation() {
+			return value;
 		}
 		
 	}
@@ -30,6 +36,7 @@ public enum CardProperties {
 			this.title = title;
 		}
 		
+		//@Override
 		public String toString() {
 			return title;
 		}
