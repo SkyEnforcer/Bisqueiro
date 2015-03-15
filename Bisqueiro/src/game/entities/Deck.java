@@ -63,7 +63,7 @@ public class Deck {
 			CardProperties.Figure figure;
 			
 			switch(n) {
-			case 0: figure = CardProperties.Figure.ONE;
+			case 0: figure = CardProperties.Figure.ACE;
 				break;
 			case 1: figure = CardProperties.Figure.TWO;
 				break;
