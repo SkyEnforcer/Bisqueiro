@@ -5,23 +5,27 @@ import java.util.ArrayList;
 import player.Player;
 import game.entities.Deck;
 import game.entities.Card;
+import game.entities.CardProperties;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
+//Needs to be subdivided into logic + game handling classes
 public class GameHandler {
 
 	private Deck deck;
 	private List<Player> players;
 	private int turnNumber;
 	
-	//numberOfPlayers > 2
-	public GameHandler(int numberOfPlayers) {
+	//numberOfPlayers >= 2
+	public GameHandler(int numberOfPlayers, List<String> playerNames) {
 		deck = new Deck();
 		players = new ArrayList<Player>(numberOfPlayers);
-		initPlayers(numberOfPlayers);
+		initPlayers(numberOfPlayers, playerNames);
 		turnNumber = 1;
 	}
 
+	//For the first turn, player 1 will always start first
+	//Needs to be subdivided again
 	public void nextTurn(Scanner in) {
 		
 		int numberOfPlayers = players.size();
@@ -32,26 +36,92 @@ public class GameHandler {
 			startPlayerTurn(in, player, cardsOnTheTable, indexOfPlayer++);
 		}
 		
-		//Assume that one of the players is already selected to play first
+		Card winningCard = checkWinningCard(cardsOnTheTable);
 		
-		/* Go through each player's turn:
-		 * ~!~[XX]~!~ Show them their cards
-		 * ~!~[XX]~!~ Have them choose a valid card (must be the same suit as the one the first player played)
-		 * """~!~[XX]~!~""" Record the card they chose, as well as who they are
-		 */
+		//Will hold the new player list, ordered by their priority for the next turn
+		List<Player> newPlayerList = new ArrayList<Player>(players.size());
+		Player player = null; //We will always enter the for loop
 		
-		/* At the end of every player's turn, check for who wins
-		 * Print who wins
-		 * Give them priority for the next turn	
-		 */
+		//Will find the player that played the winningCard and start saving him + all players after him, in order
+		boolean foundFirstPlayer = false;
+		for(int i = 0; i < players.size(); i++) {
+			player = players.get(i);
+			
+			for(Card card : player.getHand()) {
+				if(card.equals(winningCard)) {
+					foundFirstPlayer = true;
+					break;
+				}
+			}
+			
+			if(foundFirstPlayer) {
+				newPlayerList.set(i, player);
+			}
+		}
 		
-		System.out.printf("Turn %d is over!%n", turnNumber++);
+		//Gets the number of players in the new list
+		int filledPositions = newPlayerList.lastIndexOf(player) + 1;
 		
+		//Saves the rest of the players in order, starting at the previously first player
+		for(int i = filledPositions, k = 0; i < newPlayerList.size(); i++, k++) {
+			newPlayerList.set(i, players.get(k));
+		}
+		
+		//Sets players to have the new order
+		players = newPlayerList;
+		
+		//Prints the round over message
+		System.out.printf("ROUND OVER!%nPlayer %s wins round %d with %s%n%n",
+				players.get(0), turnNumber++, winningCard.getName());
+		
+		//makes each player draw a card in order
+		drawCards();
 	}
 	
-	private void initPlayers(int numberOfPlayers) {
+	public int getTurn() {
+		return turnNumber;
+	}
+	
+	//Should be working at 100%, not sure
+	private Card checkWinningCard(List<Card> cardsOnTheTable) {
+		Card winningCard = cardsOnTheTable.get(0);
+		
+		for(int i = 1; i < cardsOnTheTable.size(); i++) {
+			Card currentCard = cardsOnTheTable.get(i);
+			
+			if(winningCard.getSuit().equals(currentCard.getSuit())) {
+				winningCard = highestFigure(winningCard, currentCard);
+			} else {
+				CardProperties.Suit trumpSuit = deck.getTrumpCard().getSuit();
+				
+				if(!winningCard.getSuit().equals(trumpSuit) && currentCard.getSuit().equals(trumpSuit)) {
+					//currentCard matches the trump suit but winningCard doesn't
+					winningCard = currentCard;
+				}
+				/* else if(winningCard.getSuit().equals(trumpSuit) && !currentCard.getSuit().equals(trumpSuit)) {
+					//winningCard matches the trump suit but currentCard doesn't
+					winningCard = winningCard;
+				} else { //We have a guarantee that the cards' suits don't match and that none of them is the trump suit
+					winningCard = winningCard; //returns the oldest card
+				}*/
+				//Supposedly doesn't matter having this code or not, since it would just set winningCard to itself
+			}
+		}
+		
+		return winningCard;
+	}
+	
+	private Card highestFigure(Card winningCard, Card currentCard) {
+		if(winningCard.getNumberRepresentation() > currentCard.getNumberRepresentation()) {
+			return winningCard;
+		} else {
+			return currentCard;
+		}
+	}
+
+	private void initPlayers(int numberOfPlayers, List<String> playerNames) {
 		for(int i = 0; i < numberOfPlayers; i++) {
-			players.set(i, new Player(deck));
+			players.set(i, new Player(playerNames.get(i), deck));
 		}
 	}
 	
@@ -119,4 +189,9 @@ public class GameHandler {
 		}
 	}
 	
+	private void drawCards() {
+		for(Player player : players) {
+			player.drawCard();
+		}
+	}
 }
