@@ -9,11 +9,13 @@ public class Deck {
 	
 	//card at index 0 is the bottom card, card at index deck.size() is the top card
 	private List<Card> deck;
+	private Card trumpCard;
 	
 	public Deck() {
 		deck = new ArrayList<Card>(SIZE);
 		populate();
 		shuffle();
+		trumpCard = deck.get(0);
 	}
 
 	//This is a destructive operation, meaning it will destroy the card that's returned
@@ -26,8 +28,8 @@ public class Deck {
 	}
 	
 	//This operation only shows the card at the bottom of the deck, but does not destroy it
-	public Card getLastCard() {
-		return deck.get(0);
+	public Card getTrumpCard() {
+		return trumpCard;
 	}
 	
 	//will throw IndexOutOfBoundsException if more than 40 cards are added to the deck
