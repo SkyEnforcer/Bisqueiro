@@ -90,7 +90,10 @@ public class Deck {
 			}
 			
 			//Create and add new card
-			deck.set(index++, new Card(figure, suit));
+			/**
+			 * deck.set(index++, new Card(figure, suit));
+			 */
+			deck.add(new Card(figure, suit));
 		}
 	}
 	
