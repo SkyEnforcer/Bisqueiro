@@ -36,9 +36,8 @@ public class Deck {
 	//lambda expressions or anonymous classes might help make this more syntactic
 	//Populates the deck with every card, in order
 	private void populate() {
-		int index = 0;
 		//Iterates over the suits
-		for(int i = 0; i < 3; i++) {
+		for(int i = 0; i < 4; i++) {
 			CardProperties.Suit suit;
 			
 			//Chooses a suit
@@ -55,13 +54,13 @@ public class Deck {
 				break;
 			}
 			
-			chooseFigure(index, suit);
+			chooseFigure(suit);
 		}
 	}
 	
 	//lambda expressions or anonymous classes in populate() would invalidate the need for this method
-	private void chooseFigure(int index, CardProperties.Suit suit) {
-		for(int n = 0; n < 10; n++) {
+	private void chooseFigure(CardProperties.Suit suit) {
+		for(int n = 0; n < 10; ++n) {
 			CardProperties.Figure figure;
 			
 			switch(n) {
@@ -90,9 +89,6 @@ public class Deck {
 			}
 			
 			//Create and add new card
-			/**
-			 * deck.set(index++, new Card(figure, suit));
-			 */
 			deck.add(new Card(figure, suit));
 		}
 	}

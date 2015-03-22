@@ -19,7 +19,8 @@ public class Player {
 		
 		hand = new ArrayList<Card>(STARTING_HANDSIZE);
 		for(int i = 0; i < STARTING_HANDSIZE; i++) {
-			hand.set(i, drawCard());
+			//hand.set(i, drawCard());
+			hand.add(drawCard());
 		}
 	}
 	

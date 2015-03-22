@@ -121,7 +121,8 @@ public class GameHandler {
 
 	private void initPlayers(int numberOfPlayers, List<String> playerNames) {
 		for(int i = 0; i < numberOfPlayers; i++) {
-			players.set(i, new Player(playerNames.get(i), deck));
+			//players.set(i, new Player(playerNames.get(i), deck));
+			players.add(new Player(playerNames.get(i), deck));
 		}
 	}
 	
