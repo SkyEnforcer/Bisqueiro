@@ -69,6 +69,11 @@ public class Main {
 	private static void option1(Scanner in) {
 		List<String> playerNames = playerSet(in);
 		GameHandler game = new GameHandler(2, playerNames);
+		
+		while(!game.gameIsOver()) {
+			System.out.printf(" Turn %d%n", game.getTurn());
+			game.nextTurn(in);
+		}
 	}
 	
 	private static List<String> playerSet(Scanner in) {

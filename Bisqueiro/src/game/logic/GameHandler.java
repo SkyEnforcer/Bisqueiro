@@ -15,6 +15,7 @@ public class GameHandler {
 	private Deck deck;
 	private List<Player> players;
 	private int turnNumber;
+	private boolean gameOver;
 	
 	//numberOfPlayers >= 2
 	public GameHandler(int numberOfPlayers, List<String> playerNames) {
@@ -22,6 +23,7 @@ public class GameHandler {
 		players = new ArrayList<Player>(numberOfPlayers);
 		initPlayers(numberOfPlayers, playerNames);
 		turnNumber = 1;
+		gameOver = false;
 	}
 
 	//For the first turn, player 1 will always start first
@@ -55,7 +57,8 @@ public class GameHandler {
 			}
 			
 			if(foundFirstPlayer) {
-				newPlayerList.set(i, player);
+				//newPlayerList.set(i, player);
+				newPlayerList.add(player);
 			}
 		}
 		
@@ -64,7 +67,8 @@ public class GameHandler {
 		
 		//Saves the rest of the players in order, starting at the previously first player
 		for(int i = filledPositions, k = 0; i < newPlayerList.size(); i++, k++) {
-			newPlayerList.set(i, players.get(k));
+			//newPlayerList.set(i, players.get(k));
+			newPlayerList.add(players.get(k));
 		}
 		
 		//Sets players to have the new order
@@ -72,14 +76,24 @@ public class GameHandler {
 		
 		//Prints the round over message
 		System.out.printf("ROUND OVER!%nPlayer %s wins round %d with %s%n%n",
-				players.get(0), turnNumber++, winningCard.getName());
+				/*Isto é que está a dar merda*/players.get(0).getName(),
+				turnNumber++,
+				winningCard.getName());
 		
-		//makes each player draw a card in order
-		drawCards();
+		if(deck.getSize() != 0) {
+			//makes each player draw a card in order
+			drawCards();
+		} else if(players.get(0).getHand().size() == 0) {
+			gameOver = true;
+		}
 	}
 	
 	public int getTurn() {
 		return turnNumber;
+	}
+	
+	public boolean gameIsOver() {
+		return gameOver;
 	}
 	
 	//Should be working at 100%, not sure
@@ -135,7 +149,8 @@ public class GameHandler {
 		int chosenCard = chooseCard(in, player, numberOfCards, cardsOnTheTable);
 		
 		//Plays the card chosen previously
-		cardsOnTheTable.set(indexOfPlayer, player.playCard(chosenCard));
+		//cardsOnTheTable.set(indexOfPlayer, player.playCard(chosenCard));
+		cardsOnTheTable.add(player.playCard(chosenCard));
 	}
 	
 	private int displayCards(Player player) {
@@ -143,9 +158,9 @@ public class GameHandler {
 
 		int numberOfCards = cardNames.size();
 		
-		System.out.println("Your cards are:");
+		System.out.println(" Your cards are:");
 		for(int i = 0; i < numberOfCards; i++) {
-			System.out.println(i + " - " + cardNames.get(i));
+			System.out.println(" " + i + " - " + cardNames.get(i));
 		}
 		System.out.println();
 		
@@ -153,29 +168,38 @@ public class GameHandler {
 	}
 	
 	private int chooseCard(Scanner in, Player player, int numberOfCards, List<Card> cardsOnTheTable) {
-		int chosenCard = 0;
+		int chosenCard = -1;
 		do{
 			System.out.print("Please choose a card: ");
 			try {
 				chosenCard = in.nextInt();
 			} catch(InputMismatchException e) {
-				chosenCard = 0;
+				chosenCard = -1;
 			} finally {
-				System.out.println();
+				in.nextLine();
 			}
-		} while(chosenCard < 1 && chosenCard > numberOfCards && !validSuit(player, cardsOnTheTable.get(0), chosenCard));
+		} while((chosenCard < 0 || chosenCard >= numberOfCards) || !validSuit(player, cardsOnTheTable, chosenCard));
 		
 		//check for same suit
 		
 		return chosenCard;
 	}
 	
-	private boolean validSuit(Player player, Card firstCard, int cardChosen) {
+	private boolean validSuit(Player player, List<Card> cardsOnTheTable, int cardChosen) {
 		List<Card> cardsOwned = player.getHand();
+		Card firstCard;
+		
+		//Then he's the first one playing
+		if(cardsOnTheTable.size() == 0) {
+			return true;
+		}
+		
+		//Otherwise
+		firstCard = cardsOnTheTable.get(0);
 		
 		//First checks if the card the player played is the same suit as the first card played
 		//Or if he's the first one playing if the firstCard is null
-		if(cardsOwned.get(cardChosen).getSuit().equals(firstCard.getSuit()) || firstCard == null) {
+		if(cardsOwned.get(cardChosen).getSuit().equals(firstCard.getSuit())) {
 			return true;
 		} else {
 			for(Card card : cardsOwned) {

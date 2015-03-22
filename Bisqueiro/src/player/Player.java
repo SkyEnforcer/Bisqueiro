@@ -36,7 +36,8 @@ public class Player {
 		List<String> handNames = new ArrayList<String>(STARTING_HANDSIZE);
 		
 		for(int i = 0; i < STARTING_HANDSIZE; i++) {
-			handNames.set(i, hand.get(i).getName());
+			//handNames.set(i, hand.get(i).getName());
+			handNames.add(hand.get(i).getName());
 		}
 		
 		return handNames;

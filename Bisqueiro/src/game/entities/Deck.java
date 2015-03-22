@@ -32,6 +32,10 @@ public class Deck {
 		return trumpCard;
 	}
 	
+	public int getSize() {
+		return deck.size();
+	}
+	
 	//will throw IndexOutOfBoundsException if more than 40 cards are added to the deck
 	//lambda expressions or anonymous classes might help make this more syntactic
 	//Populates the deck with every card, in order
