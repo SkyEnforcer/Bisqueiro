@@ -71,7 +71,7 @@ public class Main {
 		GameHandler game = new GameHandler(2, playerNames);
 		
 		while(!game.gameIsOver()) {
-			System.out.printf(" Turn %d%n", game.getTurn());
+			System.out.printf(" Round %d || Trump: %s%n", game.getTurn(), game.getTrump());
 			game.nextTurn(in);
 		}
 	}

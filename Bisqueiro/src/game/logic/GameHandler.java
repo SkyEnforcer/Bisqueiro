@@ -49,10 +49,12 @@ public class GameHandler {
 		for(int i = 0; i < players.size(); i++) {
 			player = players.get(i);
 			
-			for(Card card : player.getHand()) {
-				if(card.equals(winningCard)) {
-					foundFirstPlayer = true;
-					break;
+			if(!foundFirstPlayer) {
+				for(Card card : player.getHand()) {
+					if(card.equals(winningCard)) {
+						foundFirstPlayer = true;
+						break;
+					}
 				}
 			}
 			
@@ -63,10 +65,10 @@ public class GameHandler {
 		}
 		
 		//Gets the number of players in the new list
-		int filledPositions = newPlayerList.lastIndexOf(player) + 1;
+		int filledPositions = newPlayerList.size();
 		
 		//Saves the rest of the players in order, starting at the previously first player
-		for(int i = filledPositions, k = 0; i < newPlayerList.size(); i++, k++) {
+		for(int i = filledPositions, k = 0; i < players.size(); i++, k++) {
 			//newPlayerList.set(i, players.get(k));
 			newPlayerList.add(players.get(k));
 		}
@@ -75,7 +77,7 @@ public class GameHandler {
 		players = newPlayerList;
 		
 		//Prints the round over message
-		System.out.printf("ROUND OVER!%nPlayer %s wins round %d with %s%n%n",
+		System.out.printf("ROUND OVER!%nPlayer %s wins round %d with %s.%n%n",
 				/*Isto é que está a dar merda*/players.get(0).getName(),
 				turnNumber++,
 				winningCard.getName());
@@ -94,6 +96,10 @@ public class GameHandler {
 	
 	public boolean gameIsOver() {
 		return gameOver;
+	}
+	
+	public String getTrump() {
+		return deck.getTrumpCard().getSuit().toString();
 	}
 	
 	//Should be working at 100%, not sure

@@ -20,12 +20,12 @@ public class Player {
 		hand = new ArrayList<Card>(STARTING_HANDSIZE);
 		for(int i = 0; i < STARTING_HANDSIZE; i++) {
 			//hand.set(i, drawCard());
-			hand.add(drawCard());
+			drawCard();
 		}
 	}
 	
-	public Card drawCard() {
-		return deck.getTopCard();
+	public void drawCard() {
+		hand.add(deck.getTopCard());
 	}
 	
 	public List<Card> getHand() {
@@ -33,9 +33,9 @@ public class Player {
 	}
 	
 	public List<String> getHandNames() {
-		List<String> handNames = new ArrayList<String>(STARTING_HANDSIZE);
+		List<String> handNames = new ArrayList<String>(hand.size());
 		
-		for(int i = 0; i < STARTING_HANDSIZE; i++) {
+		for(int i = 0; i < hand.size(); i++) {
 			//handNames.set(i, hand.get(i).getName());
 			handNames.add(hand.get(i).getName());
 		}
