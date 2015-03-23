@@ -13,6 +13,7 @@ public enum CardProperties {
 		
 		private Figure(String title, int value) {
 			this.title = title;
+			this.value = value;
 		}
 		
 		//@Override

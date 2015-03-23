@@ -14,7 +14,7 @@ public class Deck {
 	public Deck() {
 		deck = new ArrayList<Card>(SIZE);
 		populate();
-		shuffle();
+		shuffle(); shuffle(); shuffle(); //shuffles thrice just to be sure
 		trumpCard = deck.get(0);
 	}
 
@@ -104,6 +104,9 @@ public class Deck {
 		for(int i = SIZE - 1; i > 0; --i) {
 			swapCards(i, rnd.nextInt(i));
 		}
+		
+		//Garantir que a carta 0 ao menos tenta trocar com alguma
+		swapCards(0, rnd.nextInt(deck.size() - 1));
 	}
 	
 	//Swaps two cards

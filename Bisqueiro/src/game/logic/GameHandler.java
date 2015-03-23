@@ -39,6 +39,7 @@ public class GameHandler {
 		}
 		
 		Card winningCard = checkWinningCard(cardsOnTheTable);
+		System.err.printf("%n%n%s%n%n", winningCard.getName());
 		
 		//Will hold the new player list, ordered by their priority for the next turn
 		List<Player> newPlayerList = new ArrayList<Player>(players.size());
@@ -185,8 +186,9 @@ public class GameHandler {
 				in.nextLine();
 			}
 		} while((chosenCard < 0 || chosenCard >= numberOfCards) || !validSuit(player, cardsOnTheTable, chosenCard));
-		
 		//check for same suit
+		
+		System.out.println();
 		
 		return chosenCard;
 	}
@@ -212,6 +214,7 @@ public class GameHandler {
 				//If the player didn't match the first card's suit, but could do so, will return false
 				//Otherwise will return true because he could play any suit
 				if(card.getSuit().equals(firstCard.getSuit())) {
+					System.out.println("That's not a valid suit!");
 					return false;
 				}
 			}
