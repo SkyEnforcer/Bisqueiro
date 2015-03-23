@@ -15,7 +15,7 @@ public class GameHandler {
 	private Deck deck;
 	private List<Player> players;
 	private int turnNumber;
-	private boolean gameOver;
+	private boolean gameOver, tie;
 	
 	//numberOfPlayers >= 2
 	public GameHandler(int numberOfPlayers, List<String> playerNames) {
@@ -24,6 +24,7 @@ public class GameHandler {
 		initPlayers(numberOfPlayers, playerNames);
 		turnNumber = 1;
 		gameOver = false;
+		tie = false;
 	}
 
 	//For the first turn, player 1 will always start first
@@ -42,37 +43,6 @@ public class GameHandler {
 		
 		//Will hold the new player list, ordered by their priority for the next turn
 		List<Player> newPlayerList = new ArrayList<Player>(players.size());
-		/**Player player = null; //We will always enter the for loop
-		
-		//Will find the player that played the winningCard and start saving him + all players after him, in order
-		boolean foundFirstPlayer = false;
-		for(int i = 0; i < players.size(); i++) {
-			player = players.get(i);
-			
-			if(!foundFirstPlayer) {
-				for(Card card : player.getHand()) {
-					if(card.equals(winningCard)) {
-						foundFirstPlayer = true;
-						break;
-					}
-				}
-			}
-			
-			if(foundFirstPlayer) {
-				//newPlayerList.set(i, player);
-				newPlayerList.add(player);
-			}
-		}
-		
-		//Gets the number of players in the new list
-		int filledPositions = newPlayerList.size();
-		
-		//Saves the rest of the players in order, starting at the previously first player
-		for(int i = filledPositions, k = 0; i < players.size(); i++, k++) {
-			//newPlayerList.set(i, players.get(k));
-			newPlayerList.add(players.get(k));
-		}*/
-		
 		int index = 0;
 		
 		for(; index < cardsOnTheTable.size(); ++index) {
@@ -94,10 +64,13 @@ public class GameHandler {
 		players = newPlayerList;
 		
 		//Prints the round over message
-		System.out.printf(" ROUND OVER!%nPlayer %s wins round %d with %s.%n%n",
-				/*Isto é que está a dar merda*/players.get(0).getName(),
-				turnNumber++,
-				winningCard.getName());
+		System.out.printf(" ROUND OVER!%n  Player [%s] wins round %d with [%s].%n%n", 
+				players.get(0).getName(), turnNumber++, winningCard.getName());
+		
+		//Add points to each player
+		for(Card card : cardsOnTheTable) {
+			players.get(0).addPoints(card.getValue());
+		}
 		
 		if(deck.getSize() != 0) {
 			//makes each player draw a card in order
@@ -116,7 +89,29 @@ public class GameHandler {
 	}
 	
 	public String getTrump() {
-		return deck.getTrumpCard().getSuit().toString();
+		return deck.getTrumpCard().getName(); //previosuly getSuit().toString();
+	}
+	
+	public Player getWinningPlayer() {
+		Player winningPlayer = players.get(0);
+		
+		for(Player player : players) {
+			if(player.getPoints() > winningPlayer.getPoints()) {
+				winningPlayer = player;
+			}
+			
+			//if there's a tie then no one wins
+			if(player.getPoints() == winningPlayer.getPoints()) {
+				tie = true;
+				break;
+			}
+		}
+		
+		return winningPlayer;
+	}
+	
+	public boolean gameIsATie() {
+		return tie;
 	}
 	
 	//Should be working at 100%, not sure
@@ -149,7 +144,7 @@ public class GameHandler {
 	}
 	
 	private Card highestFigure(Card winningCard, Card currentCard) {
-		if(winningCard.getNumberRepresentation() > currentCard.getNumberRepresentation()) {
+		if(winningCard.getWorth() > currentCard.getWorth()) {
 			return winningCard;
 		} else {
 			return currentCard;
@@ -158,7 +153,6 @@ public class GameHandler {
 
 	private void initPlayers(int numberOfPlayers, List<String> playerNames) {
 		for(int i = 0; i < numberOfPlayers; i++) {
-			//players.set(i, new Player(playerNames.get(i), deck));
 			players.add(new Player(playerNames.get(i), deck));
 		}
 	}

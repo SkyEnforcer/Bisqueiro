@@ -12,14 +12,15 @@ public class Player {
 	private List<Card> hand;
 	private Deck deck;
 	private String name;
+	private int points;
 	
 	public Player(String name, Deck deck) {
 		this.name = name;
 		this.deck = deck;
+		points = 0;
 		
 		hand = new ArrayList<Card>(STARTING_HANDSIZE);
 		for(int i = 0; i < STARTING_HANDSIZE; i++) {
-			//hand.set(i, drawCard());
 			drawCard();
 		}
 	}
@@ -52,6 +53,14 @@ public class Player {
 	
 	public String getName() {
 		return name;
+	}
+	
+	public int getPoints() {
+		return points;
+	}
+	
+	public void addPoints(int points) {
+		this.points += points;
 	}
 	
 }

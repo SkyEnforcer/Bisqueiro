@@ -2,7 +2,9 @@ package userinteraction;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+
 import game.logic.GameHandler;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -73,6 +75,13 @@ public class Main {
 		while(!game.gameIsOver()) {
 			System.out.printf(" Round %d || Trump: %s%n%n", game.getTurn(), game.getTrump());
 			game.nextTurn(in);
+		}
+		
+		if(game.gameIsATie()) {
+			System.out.printf(" GAME OVER!%n  There was a tie, so you're all losers!%n%n");
+		} else {
+			System.out.printf(" GAME OVER!%n  Player [%s] wins the game with [%d] points.%n%n", 
+					game.getWinningPlayer().getName(), game.getWinningPlayer().getPoints());
 		}
 	}
 	
