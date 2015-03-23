@@ -42,7 +42,7 @@ public class GameHandler {
 		
 		//Will hold the new player list, ordered by their priority for the next turn
 		List<Player> newPlayerList = new ArrayList<Player>(players.size());
-/**Player player = null; //We will always enter the for loop
+		/**Player player = null; //We will always enter the for loop
 		
 		//Will find the player that played the winningCard and start saving him + all players after him, in order
 		boolean foundFirstPlayer = false;
@@ -94,7 +94,7 @@ public class GameHandler {
 		players = newPlayerList;
 		
 		//Prints the round over message
-		System.out.printf("ROUND OVER!%nPlayer %s wins round %d with %s.%n%n",
+		System.out.printf(" ROUND OVER!%nPlayer %s wins round %d with %s.%n%n",
 				/*Isto é que está a dar merda*/players.get(0).getName(),
 				turnNumber++,
 				winningCard.getName());
@@ -181,9 +181,9 @@ public class GameHandler {
 
 		int numberOfCards = cardNames.size();
 		
-		System.out.printf(" Your cards, %s, are:%n", player.getName());
+		System.out.printf(" Player: %s%n  Your cards:%n", player.getName());
 		for(int i = 0; i < numberOfCards; i++) {
-			System.out.println(" " + i + " - " + cardNames.get(i));
+			System.out.println("    " + i + " - " + cardNames.get(i));
 		}
 		System.out.println();
 		
@@ -193,7 +193,7 @@ public class GameHandler {
 	private int chooseCard(Scanner in, Player player, int numberOfCards, List<Card> cardsOnTheTable) {
 		int chosenCard = -1;
 		do{
-			System.out.print("Please choose a card: ");
+			System.out.print(" Please choose a card: ");
 			try {
 				chosenCard = in.nextInt();
 			} catch(InputMismatchException e) {
@@ -230,7 +230,7 @@ public class GameHandler {
 				//If the player didn't match the first card's suit, but could do so, will return false
 				//Otherwise will return true because he could play any suit
 				if(card.getSuit().equals(firstCard.getSuit())) {
-					System.out.println("That's not a valid suit!");
+					System.out.println(" That's not a valid suit!");
 					return false;
 				}
 			}

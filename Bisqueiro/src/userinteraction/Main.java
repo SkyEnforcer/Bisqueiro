@@ -22,7 +22,7 @@ public class Main {
 		
 		do {
 			System.out.printf(" ~{-~~}}  || Bisqueiro - v0.1 ||  {{~~-}~%n%n");
-			System.out.printf("  Options:%n    1 - Start game%n    2 - Settings%n    3 - Exit%n%n");
+			System.out.printf(" Options:%n   1 - Start game%n   2 - Settings%n   3 - Exit%n%n");
 			int option = optionChooser(in);
 			
 			exitFlag = optionChoiceMenu(in, option);
@@ -43,7 +43,7 @@ public class Main {
 			} finally {
 				in.nextLine();
 				if(option == -1) {
-					System.out.printf("That's not a valid option%n");
+					System.out.printf(" That's not a valid option%n");
 				}
 			}
 		} while(option == -1);
@@ -71,7 +71,7 @@ public class Main {
 		GameHandler game = new GameHandler(2, playerNames);
 		
 		while(!game.gameIsOver()) {
-			System.out.printf(" Round %d || Trump: %s%n", game.getTurn(), game.getTrump());
+			System.out.printf(" Round %d || Trump: %s%n%n", game.getTurn(), game.getTrump());
 			game.nextTurn(in);
 		}
 	}
@@ -88,7 +88,7 @@ public class Main {
 			player2 = in.nextLine();
 		} while(player2.equals(player1));
 		
-		System.out.printf(" Player 1: %s     \\VERSUS//     Player 2: %s%n%n", player1, player2);
+		System.out.println();
 		
 		playerNames.add(player1);
 		playerNames.add(player2);
