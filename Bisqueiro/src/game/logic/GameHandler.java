@@ -42,7 +42,7 @@ public class GameHandler {
 		
 		//Will hold the new player list, ordered by their priority for the next turn
 		List<Player> newPlayerList = new ArrayList<Player>(players.size());
-		Player player = null; //We will always enter the for loop
+/**Player player = null; //We will always enter the for loop
 		
 		//Will find the player that played the winningCard and start saving him + all players after him, in order
 		boolean foundFirstPlayer = false;
@@ -70,6 +70,23 @@ public class GameHandler {
 		//Saves the rest of the players in order, starting at the previously first player
 		for(int i = filledPositions, k = 0; i < players.size(); i++, k++) {
 			//newPlayerList.set(i, players.get(k));
+			newPlayerList.add(players.get(k));
+		}*/
+		
+		int index = 0;
+		
+		for(; index < cardsOnTheTable.size(); ++index) {
+			Card card = cardsOnTheTable.get(index);
+			if(card.equals(winningCard)) { //Will .equals() work as expeted?
+				break;
+			}
+		}
+		
+		for(int n = index; n < players.size(); ++n) {
+			newPlayerList.add(players.get(n));
+		}
+		
+		for(int k = 0; k < index; ++k) {
 			newPlayerList.add(players.get(k));
 		}
 		
