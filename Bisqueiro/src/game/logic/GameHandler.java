@@ -39,7 +39,6 @@ public class GameHandler {
 		}
 		
 		Card winningCard = checkWinningCard(cardsOnTheTable);
-		System.err.printf("%n%n%s%n%n", winningCard.getName());
 		
 		//Will hold the new player list, ordered by their priority for the next turn
 		List<Player> newPlayerList = new ArrayList<Player>(players.size());
@@ -165,7 +164,7 @@ public class GameHandler {
 
 		int numberOfCards = cardNames.size();
 		
-		System.out.println(" Your cards are:");
+		System.out.printf(" Your cards, %s, are:%n", player.getName());
 		for(int i = 0; i < numberOfCards; i++) {
 			System.out.println(" " + i + " - " + cardNames.get(i));
 		}
