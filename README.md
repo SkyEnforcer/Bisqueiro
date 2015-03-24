@@ -1,4 +1,4 @@
 # Bisqueiro
 A basic portuguese variant of the briscola game ("Bisca") in Java 8.
 
-Still not even an alpha.
+Now in alpha, supporting two players on a single command-line.

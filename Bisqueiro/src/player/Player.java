@@ -7,22 +7,26 @@ import game.entities.Deck;
 
 public class Player {
 	
-	public static final int HANDSIZE = 3;
+	public static final int STARTING_HANDSIZE = 3;
 	
 	private List<Card> hand;
 	private Deck deck;
+	private String name;
+	private int points;
 	
-	public Player(Deck deck) {
+	public Player(String name, Deck deck) {
+		this.name = name;
 		this.deck = deck;
+		points = 0;
 		
-		hand = new ArrayList<Card>(HANDSIZE);
-		for(int i = 0; i < HANDSIZE; i++) {
-			hand.set(i, drawCard());
+		hand = new ArrayList<Card>(STARTING_HANDSIZE);
+		for(int i = 0; i < STARTING_HANDSIZE; i++) {
+			drawCard();
 		}
 	}
 	
-	public Card drawCard() {
-		return deck.getTopCard();
+	public void drawCard() {
+		hand.add(deck.getTopCard());
 	}
 	
 	public List<Card> getHand() {
@@ -30,10 +34,11 @@ public class Player {
 	}
 	
 	public List<String> getHandNames() {
-		List<String> handNames = new ArrayList<String>(HANDSIZE);
+		List<String> handNames = new ArrayList<String>(hand.size());
 		
-		for(int i = 0; i < HANDSIZE; i++) {
-			handNames.set(i, hand.get(i).getName());
+		for(int i = 0; i < hand.size(); i++) {
+			//handNames.set(i, hand.get(i).getName());
+			handNames.add(hand.get(i).getName());
 		}
 		
 		return handNames;
@@ -44,6 +49,18 @@ public class Player {
 		Card card = hand.get(i);
 		hand.remove(i);
 		return card;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public int getPoints() {
+		return points;
+	}
+	
+	public void addPoints(int points) {
+		this.points += points;
 	}
 	
 }
